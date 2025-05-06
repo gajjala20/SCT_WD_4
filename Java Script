@@ -1,0 +1,37 @@
+function addTask() {
+  const taskText = document.getElementById("taskInput").value;
+  const taskTime = document.getElementById("taskTime").value;
+  if (taskText === "") return;
+
+  const li = document.createElement("li");
+  li.innerHTML = `
+    <span>${taskText} <small>${taskTime}</small></span>
+    <div>
+      <button onclick="markComplete(this)">✔</button>
+      <button onclick="editTask(this)">✏️</button>
+      <button onclick="removeTask(this)">🗑️</button>
+    </div>
+  `;
+  document.getElementById("taskList").appendChild(li);
+
+  document.getElementById("taskInput").value = "";
+  document.getElementById("taskTime").value = "";
+}
+
+function markComplete(btn) {
+  btn.parentElement.parentElement.classList.toggle("completed");
+}
+
+function editTask(btn) {
+  const li = btn.parentElement.parentElement;
+  const oldText = li.querySelector("span").innerText.split(" ")[0];
+  const newTask = prompt("Edit task:", oldText);
+  if (newTask) {
+    const date = li.querySelector("small").innerText;
+    li.querySelector("span").innerHTML = `${newTask} <small>${date}</small>`;
+  }
+}
+
+function removeTask(btn) {
+  btn.parentElement.parentElement.remove();
+}
